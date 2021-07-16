@@ -1,0 +1,17 @@
+[package]
+name = "find-rs"
+version = "0.1.0"
+edition = "2018"
+author = "mrudisel"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+utils = {path = "../utils"}
+
+clap = "2.33"
+termion = "1.5.6"
+regex = "1"
+num_cpus = "1.4"
+sublime_fuzzy = "0.7"
+lazy_static = "1.4"
