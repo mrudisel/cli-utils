@@ -1,4 +1,6 @@
 
+pub mod atomic_stack;
+
 pub fn pretty_fs_size(size: &usize) -> String {
     let mut divisions: usize = 0;
     let mut resulting_size: f32 = size.clone() as f32;
