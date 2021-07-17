@@ -1,7 +1,7 @@
 use std::{
     fmt,
     fs::canonicalize,
-    env::{current_dir},
+    env::current_dir,
     path::PathBuf,
 };
 
@@ -297,22 +297,20 @@ fn try_parse_size(size_arg: Option<&str>) -> Result<Option<usize>, Error> {
 }
 
 fn get_size_multiplier_from_units(units: &str) -> usize {
-    let pow: u32 = match units.to_lowercase().chars().nth(0) {
-        Some('k') => 1,
-        Some('m') => 2,
-        Some('g') => 3,
+    let mut mult: usize = match units.to_lowercase().chars().nth(0) {
+        Some('k') => 1024,
+        Some('m') => 1024 * 1024,
+        Some('g') => 1024 * 1024 * 1024,
         Some('t') => 4,
         _ => return 1,
     };
-
-    let mut mult = 1024_i32.pow(pow);
 
     if let Some(last_char) = units.chars().last() {
         // If we got a lower case b, assume bits not bytes, so scale by 8.
         if last_char == 'b' { mult /= 8 };
     }
 
-    mult as usize
+    mult
 }
 
 fn get_find_only_type(find_arg: Option<&str>) -> Option<FindOnly> {
@@ -343,8 +341,7 @@ pub fn parse_cli() -> Result<FindArgs, Error> {
 
     let pattern_arg = Arg::with_name("patterns")
         .help("The pattern(s) to match file/directory names against.")
-        .multiple(true)
-        .required_unless_one(&["regex", "exts", "fuzzy"]);
+        .multiple(true);
 
     let exts_arg = Arg::with_name("exts")
         .help("File extensions to search for. Implies '--type file'")
@@ -388,7 +385,7 @@ pub fn parse_cli() -> Result<FindArgs, Error> {
         .help("Maximum number of worker threads to use. Defaults to 'num_cpus - 1'")
         .short("w")
         .long("max-workers")
-        .takes_value(false);
+        .takes_value(true);
 
     let type_arg = Arg::with_name("type")
         .help("Whether to search only for files, or directories.")
@@ -425,7 +422,6 @@ pub fn parse_cli() -> Result<FindArgs, Error> {
         .long("verbose")
         .required(false)
         .takes_value(false);
-
 
     let images_arg = Arg::with_name("images")
         .help("Shortcuts to search for image file types")
