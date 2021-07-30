@@ -5,8 +5,6 @@ use std::{
     path::PathBuf,
 };
 
-use lazy_static::lazy_static;
-use regex::{Regex, Captures};
 use clap::{Arg, App, ArgMatches, Values};
 
 
@@ -70,6 +68,7 @@ pub struct FindArgs {
     pub verbose: bool,
 }
 
+/*
 fn build_regexes<F>(values: Values, formatter: F) -> Vec<Regex>
 where F: Fn(&str) -> String
 {
@@ -80,6 +79,8 @@ where F: Fn(&str) -> String
         })
         .collect()
 }
+*/
+
 
 impl FindArgs {
     pub fn from_arg_matches(matches: &ArgMatches) -> Result<FindArgs, Error> {
@@ -120,7 +121,7 @@ impl FindArgs {
 
         }
         */
-
+        /*
         let pattern_values = matches.values_of("patterns");
         let regex_values = matches.values_of("regex");
         let ext_values = matches.values_of("exts");
@@ -144,12 +145,12 @@ impl FindArgs {
                 .map(|val| val.to_string())
                 .collect()
         });
-
+        */
 
         Ok(FindArgs {
             root: get_root_path(matches.value_of("root"))?,
-            regex_matchers: regexes,
-            fuzzy_matchers: fuzzy_patterns,
+            // regex_matchers: regexes,
+            fuzzy_matchers: None,// fuzzy_patterns,
             fuzzy_thresh: parse_fuzzy_thresh(matches.value_of("fuzzy-thresh"))?,
             min_size: try_parse_size(matches.value_of("min-size"))?,
             max_size:  try_parse_size(matches.value_of("max-size"))?,
@@ -185,6 +186,7 @@ impl fmt::Display for FindArgs {
             _ => write!(f, "Using {} Worker threads\n", self.worker_threads)?,
         }
 
+        /*
         // log whichever method we're using to match
         if let Some(match_patterns) = &self.regex_matchers {
             let match_strs: Vec<String> = match_patterns.iter()
@@ -197,7 +199,9 @@ impl fmt::Display for FindArgs {
                 _ => write!(f, "Regex patterns - {}\n", match_strs.join(", "))?,
             }
         }
-        else if let Some(fuzzy_patterns) = &self.fuzzy_matchers {
+        else
+        */
+        if let Some(fuzzy_patterns) = &self.fuzzy_matchers {
             write!(f, "Fuzzy matching with a score threshold of {}\n", self.fuzzy_thresh)?;
 
             match fuzzy_patterns.len() {

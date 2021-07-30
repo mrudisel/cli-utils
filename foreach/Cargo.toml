@@ -1,14 +1,11 @@
 [package]
-name = "find-rs"
+name = "foreach"
 version = "0.1.0"
 edition = "2018"
-authors = ["mrudisel"]
+author = "mrudisel"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-finder = { path = "./finder" }
-utils = { path = "../utils" }
-
 clap = "2.33"
 termion = "1.5.6"

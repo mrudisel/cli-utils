@@ -1,0 +1,13 @@
+[package]
+name = "finder"
+version = "0.1.0"
+edition = "2018"
+authors = ["mrudisel"]
+
+[dependencies]
+thread_pool = { path="../thread-pool" }
+regex = "1"
+num_cpus = "1.4"
+sublime_fuzzy = "0.7"
+lazy_static = "1.4"
+mime_guess = "2.0"
